@@ -102,6 +102,16 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.4"
+<<<<<<< HEAD
+=======
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.8.0+1"
+>>>>>>> b09f3ef99d35d5538c708ebdf4094df9d4b08f46
   petitparser:
     dependency: transitive
     description:
@@ -162,7 +172,11 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.2.15"
+=======
+    version: "0.2.11"
+>>>>>>> b09f3ef99d35d5538c708ebdf4094df9d4b08f46
   typed_data:
     dependency: transitive
     description:
@@ -185,4 +199,8 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
+<<<<<<< HEAD
   dart: ">=2.7.0 <3.0.0"
+=======
+  dart: ">=2.4.0 <3.0.0"
+>>>>>>> b09f3ef99d35d5538c708ebdf4094df9d4b08f46
