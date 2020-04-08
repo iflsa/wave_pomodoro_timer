@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatelessWidget {
-  const Settings({Key key}) : super(key: key);
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
 
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
-      child: Text("Settings"),
-    );
+        child: Center(
+      child: Text("SEtings"),
+    ));
   }
 }
