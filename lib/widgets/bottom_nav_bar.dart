@@ -15,9 +15,8 @@ class BottomNavBar extends StatelessWidget {
     return ShowUp(
       delay: 500,
       child: Container(
-        color: AppColors.color1,
         height: 70.0,
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(16.0),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,16 +70,18 @@ class BottomNavBar extends StatelessWidget {
       borderRadius: BorderRadius.circular(50.0),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {
-          pageController.animateToPage(
-            pageNum == 0 ? 1 : 0,
-            duration: Duration(milliseconds: 250),
-            curve: Curves.ease,
-          );
-        },
+        onTap: () {},
         child: Container(
-          margin: EdgeInsets.all(10.0),
-          child: Center(child: Text("TODO YET")),
+          child: Center(
+            child: Text(
+              "start",
+              style: TextStyle(
+                fontFamily: "Comfortaa-Bold",
+                fontSize: 24.0,
+                color: AppColors.color4,
+              ),
+            ),
+          ),
         ),
       ),
     );

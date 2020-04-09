@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: AppColors.color4,
+        accentColor: AppColors.color1,
       ),
       home: Home(),
     );

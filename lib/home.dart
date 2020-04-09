@@ -6,6 +6,7 @@ import 'package:wave_pomodoro_timer/pages/statistics_page.dart';
 import 'package:wave_pomodoro_timer/res/images.dart';
 import 'package:wave_pomodoro_timer/widgets/bottom_nav_bar.dart';
 import 'package:wave_pomodoro_timer/widgets/show_up.dart';
+import 'package:wave_pomodoro_timer/widgets/waves.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -18,15 +19,7 @@ class _HomeState extends State<Home> {
   PageController _pageController = PageController(initialPage: 1);
   int _pageNum = 1;
 
-  @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      print("dsddf");
-      setState(() {});
-    });
-  }
-
+  double _anima = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +28,7 @@ class _HomeState extends State<Home> {
         children: [
           //Container for pages
           Container(
+            padding: EdgeInsets.only(bottom: 75.0), //Should change later
             child: PageView(
               controller: _pageController,
               onPageChanged: (pageNum) => setState(() {
@@ -49,15 +43,36 @@ class _HomeState extends State<Home> {
           ),
 
           /// Animation container
-          // Container(
-          //   height: 100.0,
-          //   width: 250,
-          //   color: AppColors.color1,
-          //   child: Text("Animation"),
-          // ),
+          ShowUp(
+            delay: 500,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Waves(),
+                AnimatedContainer(
+                  duration: Duration(seconds: 30),
+                  height: _anima + 70.0,
+                  width: MediaQuery.of(context).size.width,
+                  color: AppColors.color1,
+                ),
+              ],
+            ),
+          ),
 
-          /// UI elements container
+          /// Bottom UI elements
           BottomNavBar(pageNum: _pageNum, pageController: _pageController),
+
+          ///Debug only
+          // RaisedButton(
+          //   child: Text("ANIMA?!?!??!"),
+          //   onPressed: () {
+          //     setState(() {
+          //       _anima = _anima == 0
+          //           ? MediaQuery.of(context).size.height - 150.0
+          //           : 0;
+          //     });
+          //   },
+          // )
         ],
       ),
     );
