@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wave_pomodoro_timer/app_colors.dart';
 import 'package:wave_pomodoro_timer/home.dart';
+import 'package:wave_pomodoro_timer/state.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppState()),
+      ],
+      child: MyApp(),
+    ));
 
 class MyApp extends StatelessWidget {
   @override

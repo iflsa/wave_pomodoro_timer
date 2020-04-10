@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wave_pomodoro_timer/app_colors.dart';
+import 'package:wave_pomodoro_timer/state.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -9,107 +11,87 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  double _session_time = 25.0;
-  double _short_break_time = 5.0;
-  double _long_break_time = 30.0;
-  double _short_breaks = 3.0;
-  bool _show_notifications = true;
-  bool _mute_sound = false;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
+    return Consumer<AppState>(
+      builder: (ctx, state, child) => Container(
         padding: EdgeInsets.all(5.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                "Settings",
-                style: TextStyle(
-                  fontFamily: "Pacifico",
-                  fontSize: 50.0,
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Settings",
+                  style: TextStyle(
+                    fontFamily: "Pacifico",
+                    fontSize: 50.0,
+                  ),
                 ),
               ),
-            ),
-            _buildSlider(
-              text: "Session Time:",
-              value: _session_time,
-              setValue: (val) => setState(() {
-                _session_time = val;
-              }),
-            ),
-            _buildSlider(
-              text: "Short Break Time:",
-              value: _short_break_time,
-              setValue: (val) => setState(() {
-                _short_break_time = val;
-              }),
-            ),
-            _buildSlider(
-              text: "Long Break Time:",
-              value: _long_break_time,
-              setValue: (val) => setState(() {
-                _long_break_time = val;
-              }),
-            ),
-            _buildSlider(
-              text: "Long Break Per:",
-              value: _short_breaks,
-              setValue: (val) => setState(() {
-                _short_breaks = val;
-              }),
-            ),
-            _buildSwitch(
-              text: "Show Notifications:",
-              value: _show_notifications,
-              setValue: (val) => setState(
-                () {
-                  _show_notifications = val;
-                },
+              _buildSlider(
+                text: "Session Time:",
+                value: state.sessionTime.toDouble(),
+                setValue: (val) => state.sessionTime = val,
               ),
-            ),
-            _buildSwitch(
-              text: "Mute Sound:",
-              value: _mute_sound,
-              setValue: (val) => setState(
-                () {
-                  _mute_sound = val;
-                },
+              _buildSlider(
+                text: "Short Break Time:",
+                value: state.shortBreakTime.toDouble(),
+                setValue: (val) => state.shortBreakTime = val,
               ),
-            ),
-            Center(
-              child: Material(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(50.0),
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  onTap: () async {
-                    const url =
-                        'https://github.com/miloszratajczyk/wave_pomodoro_timer';
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "source",
-                      style: TextStyle(
-                          fontFamily: "Comfortaa-Bold",
-                          fontSize: 24.0,
-                          color: AppColors.color1),
+              _buildSlider(
+                text: "Long Break Time:",
+                value: state.longBreakTime.toDouble(),
+                setValue: (val) => state.longBreakTime = val,
+              ),
+              _buildSlider(
+                text: "Long Break Per:",
+                value: state.shortBreaks.toDouble(),
+                setValue: (val) => state.shortBreaks = val,
+              ),
+              _buildSwitch(
+                text: "Show Notifications:",
+                value: state.showNotifications,
+                setValue: (val) => state.showNotifications = val,
+              ),
+              _buildSwitch(
+                text: "Mute Sound:",
+                value: state.muteSound,
+                setValue: (val) => state.muteSound = val,
+              ),
+              Center(
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(50.0),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () async {
+                      const url =
+                          'https://github.com/miloszratajczyk/wave_pomodoro_timer';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "source",
+                        style: TextStyle(
+                            fontFamily: "Comfortaa-Bold",
+                            fontSize: 24.0,
+                            color: AppColors.color1),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
