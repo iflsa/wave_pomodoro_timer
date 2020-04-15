@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wave_pomodoro_timer/app_colors.dart';
 import 'package:wave_pomodoro_timer/res/images.dart';
+import 'package:wave_pomodoro_timer/widgets/my_icon_button.dart';
+import 'package:wave_pomodoro_timer/widgets/my_text_button.dart';
 import 'package:wave_pomodoro_timer/widgets/show_up.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -21,101 +23,31 @@ class BottomNavBar extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildStatisticsButton(),
-            _buildMainButton(),
-            _buildSettingsButton(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatisticsButton() {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(50.0),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {
-          pageController.animateToPage(
-            pageNum == 0 ? 1 : 0,
-            duration: Duration(milliseconds: 250),
-            curve: Curves.ease,
-          );
-        },
-        child: Container(
-          width: 25.0,
-          height: 25.0,
-          margin: EdgeInsets.all(10.0),
-          child: AnimatedCrossFade(
-            firstChild: Image(
-              image: AssetImage(Images.arrowLeft),
-            ),
-            secondChild: Image(
-              image: AssetImage(Images.statistics),
-            ),
-            duration: Duration(milliseconds: 250),
-            crossFadeState: pageNum == 0
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMainButton() {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(50.0),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          child: Center(
-            child: Text(
-              "start",
-              style: TextStyle(
-                fontFamily: "Comfortaa-Bold",
-                fontSize: 24.0,
-                color: AppColors.color4,
+            MyIconButton(
+              firstChild: Image(image: AssetImage(Images.arrowLeft)),
+              secondChild: Image(image: AssetImage(Images.statistics)),
+              fade: pageNum == 0,
+              onTap: () => pageController.animateToPage(
+                pageNum == 0 ? 1 : 0,
+                duration: Duration(milliseconds: 250),
+                curve: Curves.ease,
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Material _buildSettingsButton() {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(50.0),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {
-          pageController.animateToPage(
-            pageNum == 2 ? 1 : 2,
-            duration: Duration(milliseconds: 250),
-            curve: Curves.ease,
-          );
-        },
-        child: Container(
-          width: 25.0,
-          height: 25.0,
-          margin: EdgeInsets.all(10.0),
-          child: AnimatedCrossFade(
-            firstChild: Image(
-              image: AssetImage(Images.arrowRight),
+            MyTextButton(
+              text: Text("start"),
+              onTap: () {},
             ),
-            secondChild: Image(
-              image: AssetImage(Images.settings),
-            ),
-            duration: Duration(milliseconds: 250),
-            crossFadeState: pageNum == 2
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
-          ),
+            MyIconButton(
+              firstChild: Image(image: AssetImage(Images.arrowRight)),
+              secondChild: Image(image: AssetImage(Images.settings)),
+              fade: pageNum == 2,
+              onTap: () => pageController.animateToPage(
+                pageNum == 2 ? 1 : 2,
+                duration: Duration(milliseconds: 250),
+                curve: Curves.ease,
+              ),
+            )
+          ],
         ),
       ),
     );

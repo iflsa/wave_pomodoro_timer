@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:wave_pomodoro_timer/app_colors.dart';
-// import 'package:simple_animations_example_app/widgets/example_page.dart';
 
 class Waves extends StatelessWidget {
-  const Waves({Key key}) : super(key: key);
+  const Waves(this.anim, {Key key}) : super(key: key);
+
+  final double anim;
 
   @override
   Widget build(BuildContext context) {
@@ -14,32 +15,28 @@ class Waves extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       children: <Widget>[
         AnimatedWave(
-          height: 50,
+          height: 70,
           speed: 1.0,
-          color: AppColors.color3,
+          color: AppColors.color3.withOpacity(0.75),
+          anim: anim,
         ),
         AnimatedWave(
-          height: 45,
+          height: 65,
           speed: 0.8,
-          color: AppColors.color2,
+          color: AppColors.color2.withOpacity(0.75),
           offset: pi,
+          anim: anim,
         ),
         AnimatedWave(
-          height: 40,
+          height: 60,
           speed: 0.7,
           color: AppColors.color1,
           offset: pi / 2,
+          anim: anim,
         ),
       ],
     );
   }
-
-  onBottom(Widget child) => Positioned(
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: child,
-        ),
-      );
 }
 
 class AnimatedWave extends StatelessWidget {
@@ -47,12 +44,14 @@ class AnimatedWave extends StatelessWidget {
     this.height,
     this.speed,
     this.color,
+    this.anim,
     this.offset = 0.0,
   });
   final double height;
   final double speed;
   final double offset;
   final Color color;
+  final double anim;
 
   @override
   Widget build(BuildContext context) {
@@ -61,24 +60,23 @@ class AnimatedWave extends StatelessWidget {
         height: height,
         width: constraints.biggest.width,
         child: ControlledAnimation(
-            playback: Playback.LOOP,
-            duration: Duration(milliseconds: (5000 / speed).round()),
-            tween: Tween(begin: 0.0, end: 2 * pi),
-            builder: (context, value) {
-              return CustomPaint(
-                foregroundPainter: CurvePainter(value + offset, color),
-              );
-            }),
+          playback: Playback.LOOP,
+          duration: Duration(milliseconds: (5000 / speed).round()),
+          tween: Tween(begin: 0.0, end: 2 * pi),
+          builder: (context, value) => CustomPaint(
+            foregroundPainter: CurvePainter(value + offset, color, anim),
+          ),
+        ),
       ),
     );
   }
 }
 
 class CurvePainter extends CustomPainter {
+  CurvePainter(this.value, this.color, this.anim);
   final double value;
   final Color color;
-
-  CurvePainter(this.value, this.color);
+  final double anim;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -89,11 +87,11 @@ class CurvePainter extends CustomPainter {
     final y2 = sin(value + pi / 2);
     final y3 = sin(value + pi);
 
-    final startPointY = size.height * (0.5 + 0.4 * y1);
-    final controlPointY = size.height * (0.5 + 0.4 * y2);
-    final endPointY = size.height * (0.5 + 0.4 * y3);
+    final startPointY = size.height * (0.5 + 0.4 * y1) - 50.0 - anim;
+    final controlPointY = size.height * (0.5 + 0.4 * y2) - 50.0 - anim;
+    final endPointY = size.height * (0.5 + 0.4 * y3) - 50.0 - anim;
 
-    path.moveTo(size.width * 0, startPointY);
+    path.moveTo(0, startPointY);
     path.quadraticBezierTo(
         size.width * 0.5, controlPointY, size.width, endPointY);
     path.lineTo(size.width, size.height);
@@ -103,7 +101,5 @@ class CurvePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }

@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wave_pomodoro_timer/app_colors.dart';
 import 'package:wave_pomodoro_timer/state.dart';
+import 'package:wave_pomodoro_timer/widgets/my_text_button.dart';
+import 'package:wave_pomodoro_timer/widgets/my_title.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -22,16 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                  "Settings",
-                  style: TextStyle(
-                    fontFamily: "Pacifico",
-                    fontSize: 50.0,
-                  ),
-                ),
-              ),
+              MyTitle("Settings"),
               _buildSlider(
                 text: "Session Time:",
                 value: state.sessionTime.toDouble(),
@@ -62,33 +55,21 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: state.muteSound,
                 setValue: (val) => state.muteSound = val,
               ),
-              Center(
-                child: Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(50.0),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () async {
-                      const url =
-                          'https://github.com/miloszratajczyk/wave_pomodoro_timer';
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "source",
-                        style: TextStyle(
-                            fontFamily: "Comfortaa-Bold",
-                            fontSize: 24.0,
-                            color: AppColors.color1),
-                      ),
-                    ),
-                  ),
+              MyTextButton(
+                text: Text(
+                  "source",
+                  style: TextStyle(
+                      fontFamily: "Comfortaa-Bold", color: AppColors.color1),
                 ),
+                onTap: () async {
+                  const url =
+                      'https://github.com/miloszratajczyk/wave_pomodoro_timer';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
               ),
             ],
           ),
